@@ -12,16 +12,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class User {
+public class Preferences {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String userName;
+    private String email;
 
-    private String something;
+    private String phone;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }
-

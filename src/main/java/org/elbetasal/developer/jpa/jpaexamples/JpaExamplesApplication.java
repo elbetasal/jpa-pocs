@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 @SpringBootApplication
@@ -32,6 +31,7 @@ public class JpaExamplesApplication {
             userRepository.save(User
                     .builder()
                     .userName("pleymo")
+                    .something("other")
                     .build());
         };
 
@@ -58,6 +58,18 @@ public class JpaExamplesApplication {
         @PatchMapping("/user/{id}")
         void updateUser(@PathVariable Long id , @RequestBody User user){
             userService.updateUser(id , user.getUserName());
+        }
+
+        @PostMapping("/user/{id}/preferences")
+        void savePreferences(@PathVariable Long id , @RequestBody Preferences preferences) {
+            userService.savePreferencesForUserByReference(id , preferences);
+
+        }
+
+        @PostMapping("/user/{id}/preferences/find")
+        void savePreferencesByFind(@PathVariable Long id , @RequestBody Preferences preferences) {
+            userService.savePreferencesForUserByFind(id , preferences);
+
         }
     }
 
